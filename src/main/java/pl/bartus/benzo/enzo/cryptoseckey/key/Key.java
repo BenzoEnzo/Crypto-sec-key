@@ -3,7 +3,6 @@ package pl.bartus.benzo.enzo.cryptoseckey.key;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigInteger;
@@ -13,12 +12,12 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 
+
 @Document(collection = "keys")
 @Setter
 @Getter
 public class Key {
 
-    @Id
     private String id;
     private String encryptedKey;
     private LocalDateTime generatedAt;

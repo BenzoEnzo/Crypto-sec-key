@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="https://www.enzo-security.gl/crypto"
+        elementFormDefault="qualified">
+
+    <element name="VerifySecurityKeyRequest">
+        <complexType>
+            <sequence>
+                <element name="encryptedKey" type="string"/>
+            </sequence>
+        </complexType>
+    </element>
+
+    <element name="VerifySecurityKeyResponse">
+        <complexType>
+            <sequence>
+                <element name="isValid" type="boolean"/>
+            </sequence>
+        </complexType>
+    </element>
+</schema>
