@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: key-database-metadata
+spec:
+  serviceName: key-database
+  replicas: 1
+  selector:
+    matchLabels:
+      app: key-db-app
+  template:
+    metadata:
+      labels:
+        app: key-db-app
+    spec:
+      containers:
+        - name: crypto-key-database
+          image: mongo:latest
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: 'CR1_KEY'
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: 'localapp'
+            - name: MONGO_INITDB_DATABASE
+              value: 'CRYPTO_KEY_DB'
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: mongodb-data
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongodb-key-metadata-volume
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1Gi
