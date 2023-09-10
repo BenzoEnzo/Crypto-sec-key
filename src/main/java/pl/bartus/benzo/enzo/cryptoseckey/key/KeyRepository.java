@@ -7,7 +7,6 @@ import java.util.Optional;
 
 @Repository
 public interface KeyRepository extends MongoRepository<Key, String> {
-    Boolean existsKeyByEncryptedKey(String key);
-
     Optional<Key> findFirstBy();
+    Optional<Key> findKeyByEncryptedKey(String encryptedKey);
 }

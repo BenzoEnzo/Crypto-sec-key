@@ -1,13 +1,8 @@
 package pl.bartus.benzo.enzo.cryptoseckey.key;
 
-
 import org.springframework.stereotype.Service;
-
-
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 
 @Service
@@ -22,10 +17,13 @@ public class KeyService {
     }
 
     public void getOrCreate(){
-        Optional<Key> optionalKey = keyRepository.findFirstBy();
-        Key key = optionalKey.orElseGet(Key::new);
+        Key key = keyRepository.findFirstBy().orElseGet(Key::new);
         key.updateEncryptedKey();
         key.setGeneratedAt(LocalDateTime.now());
         keyRepository.save(key);
+    }
+
+    public boolean validateSecurityKey(String securityKey){
+        return keyRepository.findKeyByEncryptedKey(securityKey).isPresent();
     }
 }

@@ -17,10 +17,12 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 public class Key {
+
     @Id
     private String id;
     private String encryptedKey;
     private LocalDateTime generatedAt;
+    private boolean isCorrectlyKey;
     public void updateEncryptedKey(){
         try {
             SecureRandom secureRandom = new SecureRandom();
@@ -36,5 +38,42 @@ public class Key {
             this.encryptedKey = hexString.toString();
         } catch (NoSuchAlgorithmException ignored) {}
     }
-    public Key(){}
+    public Key(){
+        this.isCorrectlyKey = true;
+    }
+
+    public static class Builder{
+        private String id;
+        private String encryptedKey;
+        private LocalDateTime generatedAt;
+        private boolean isCorrectlyKey;
+
+        public Builder setId(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder setEncryptedKey(String encryptedKey) {
+            this.encryptedKey = encryptedKey;
+            return this;
+        }
+
+        public Builder setGeneratedAt(LocalDateTime generatedAt) {
+            this.generatedAt = generatedAt;
+            return this;
+        }
+
+        public Builder setIsCorrectlyKey(boolean isCorrectlyKey) {
+            this.isCorrectlyKey = isCorrectlyKey;
+            return this;
+        }
+        public Key build() {
+            Key key = new Key();
+            key.id = this.id;
+            key.encryptedKey = this.encryptedKey;
+            key.generatedAt = this.generatedAt;
+            key.isCorrectlyKey = this.isCorrectlyKey;
+            return key;
+        }
+    }
 }
