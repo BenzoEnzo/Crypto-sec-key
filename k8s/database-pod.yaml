@@ -15,23 +15,23 @@ spec:
         app: key-db-app
     spec:
       containers:
-        - name: crypto-key-database
+        - name: crypto-msg-database
           image: mongo:latest
           env:
             - name: MONGO_INITDB_ROOT_USERNAME
-              value: 'CR1_KEY'
+              value: 'CR2_KEY'
             - name: MONGO_INITDB_ROOT_PASSWORD
               value: 'localapp'
             - name: MONGO_INITDB_DATABASE
               value: 'CRYPTO_KEY_DB'
           ports:
-            - containerPort: 27017
+            - containerPort: 7777
           volumeMounts:
             - name: mongodb-data
               mountPath: /data/db
   volumeClaimTemplates:
     - metadata:
-        name: mongodb-key-metadata-volume
+        name: mongodb-data
       spec:
         accessModes: [ "ReadWriteOnce" ]
         resources:

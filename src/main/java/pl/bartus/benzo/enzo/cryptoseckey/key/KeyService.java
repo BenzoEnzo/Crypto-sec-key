@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 
 @Service
@@ -16,29 +18,14 @@ public class KeyService {
     }
 
     public List<Key> getAll(){
-        List<Key> keys = keyRepository.findAll();
-        if(keys.isEmpty()){
-            final Key key = new Key();
-            key.setGeneratedAt(LocalDateTime.now());
-            keyRepository.save(key);
-        }
-        return keys;
+        return keyRepository.findAll();
     }
 
-    public void updateDatabase(){
-       List<Key> dbKeys = getAll();
-       Key key = new Key();
-       if(dbKeys.isEmpty()){
-           keyRepository.save(key);
-       } else {
-          key.updateEncryptedKey();
-          key.setGeneratedAt(LocalDateTime.now());
-          keyRepository.save(key);
-       }
+    public void getOrCreate(){
+        Optional<Key> optionalKey = keyRepository.findFirstBy();
+        Key key = optionalKey.orElseGet(Key::new);
+        key.updateEncryptedKey();
+        key.setGeneratedAt(LocalDateTime.now());
+        keyRepository.save(key);
     }
-
-    public Key findKeyById(Key key){
-        return keyRepository.findById(key.getId()).orElse(null);
-    }
-
 }
