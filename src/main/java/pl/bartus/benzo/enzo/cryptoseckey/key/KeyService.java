@@ -23,7 +23,7 @@ public class KeyService {
         keyRepository.save(key);
     }
 
-    public boolean validateSecurityKey(String securityKey){
-        return keyRepository.findKeyByEncryptedKey(securityKey).isPresent();
+    public boolean validateSecurityKey(String encryptedKey){
+        return keyRepository.findByEncryptedKey(encryptedKey).isPresent();
     }
 }

@@ -21,12 +21,14 @@ public class Key {
     @Id
     private String id;
     private String encryptedKey;
+    private String code;
     private LocalDateTime generatedAt;
-    private boolean isCorrectlyKey;
+
     public void updateEncryptedKey(){
         try {
             SecureRandom secureRandom = new SecureRandom();
             String randomString = new BigInteger(130, secureRandom).toString(32);
+            this.code = randomString;
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(randomString.getBytes(StandardCharsets.UTF_8));
             StringBuilder hexString = new StringBuilder(2 * hash.length);
@@ -39,41 +41,6 @@ public class Key {
         } catch (NoSuchAlgorithmException ignored) {}
     }
     public Key(){
-        this.isCorrectlyKey = true;
     }
 
-    public static class Builder{
-        private String id;
-        private String encryptedKey;
-        private LocalDateTime generatedAt;
-        private boolean isCorrectlyKey;
-
-        public Builder setId(String id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder setEncryptedKey(String encryptedKey) {
-            this.encryptedKey = encryptedKey;
-            return this;
-        }
-
-        public Builder setGeneratedAt(LocalDateTime generatedAt) {
-            this.generatedAt = generatedAt;
-            return this;
-        }
-
-        public Builder setIsCorrectlyKey(boolean isCorrectlyKey) {
-            this.isCorrectlyKey = isCorrectlyKey;
-            return this;
-        }
-        public Key build() {
-            Key key = new Key();
-            key.id = this.id;
-            key.encryptedKey = this.encryptedKey;
-            key.generatedAt = this.generatedAt;
-            key.isCorrectlyKey = this.isCorrectlyKey;
-            return key;
-        }
-    }
 }
