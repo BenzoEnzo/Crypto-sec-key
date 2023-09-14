@@ -1,10 +1,12 @@
 package pl.bartus.benzo.enzo.cryptoseckey.key;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-import pl.bartus.benzo.enzo.cryptoseckey.dto.KeyDto;
+import pl.bartus.benzo.enzo.cryptoseckey.model.TokenUtil;
+import pl.bartus.benzo.enzo.cryptoseckey.model.verify.VerifyRequest;
+import pl.bartus.benzo.enzo.cryptoseckey.model.verify.VerifyResponse;
 
 import java.util.List;
 
@@ -23,9 +25,15 @@ private final KeyService keyService;
                 .body(keyService.getAll());
     }
 
-    public ResponseEntity<KeyDto> validateKey(KeyDto keyDto){
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(keyService.validateSecurityKey(keyDto.getEncryptedKey()));
+    public ResponseEntity<VerifyResponse> validateKey(VerifyRequest verifyRequest){
+        final VerifyResponse verifyResponse = keyService.validateSecurityKey(verifyRequest);
+        if(verifyResponse.isSuccess()){
+            final String sessionToken = TokenUtil.createToken(verifyRequest.encryptedKey());
+            return ResponseEntity.status(HttpStatus.OK)
+                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + sessionToken)
+                    .body(verifyResponse);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(verifyResponse);
+        }
     }
 }

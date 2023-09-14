@@ -10,7 +10,7 @@ public class KeyUpdater {
     public KeyUpdater(KeyService keyService) {
         this.keyService = keyService;
     }
-    @Scheduled(fixedRate = 2000000)
+    @Scheduled(fixedRate = 2000000000)
     public void keyServerUpdate(){
         keyService.getOrCreate();
     }
