@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import pl.bartus.benzo.enzo.cryptoseckey.dto.KeyDto;
 
 import java.util.List;
 
@@ -22,9 +23,9 @@ private final KeyService keyService;
                 .body(keyService.getAll());
     }
 
-    public ResponseEntity<Boolean> validateKey(String encryptedKey){
+    public ResponseEntity<Boolean> validateKey(KeyDto keyDto){
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(keyService.validateSecurityKey(encryptedKey));
+                .body(keyService.validateSecurityKey(keyDto.getEncryptedKey()));
     }
 }
