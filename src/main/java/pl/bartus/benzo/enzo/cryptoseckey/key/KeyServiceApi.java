@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface KeyServiceApi {
     ResponseEntity<List<Key>> getKey();
-    ResponseEntity<Boolean> validateKey(KeyDto keyDto);
+    ResponseEntity<KeyDto> validateKey(KeyDto keyDto);
 }

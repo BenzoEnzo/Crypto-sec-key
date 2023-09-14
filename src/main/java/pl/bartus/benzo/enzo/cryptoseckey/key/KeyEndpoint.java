@@ -23,7 +23,7 @@ private final KeyService keyService;
                 .body(keyService.getAll());
     }
 
-    public ResponseEntity<Boolean> validateKey(KeyDto keyDto){
+    public ResponseEntity<KeyDto> validateKey(KeyDto keyDto){
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(keyService.validateSecurityKey(keyDto.getEncryptedKey()));
