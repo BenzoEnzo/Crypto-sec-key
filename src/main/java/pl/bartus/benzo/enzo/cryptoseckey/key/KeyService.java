@@ -1,7 +1,6 @@
 package pl.bartus.benzo.enzo.cryptoseckey.key;
 
 import org.springframework.stereotype.Service;
-import pl.bartus.benzo.enzo.cryptoseckey.model.KeyDto;
 import pl.bartus.benzo.enzo.cryptoseckey.model.verify.VerifyRequest;
 import pl.bartus.benzo.enzo.cryptoseckey.model.verify.VerifyResponse;
 
@@ -25,6 +24,7 @@ public class KeyService {
         Key key = keyRepository.findFirstBy().orElseGet(Key::new);
         key.updateEncryptedKey();
         key.setGeneratedAt(LocalDateTime.now());
+        System.out.println(key.getEncryptedKey());
         keyRepository.save(key);
     }
 

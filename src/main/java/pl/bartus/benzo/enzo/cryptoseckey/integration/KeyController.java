@@ -4,7 +4,6 @@ package pl.bartus.benzo.enzo.cryptoseckey.integration;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.bartus.benzo.enzo.cryptoseckey.model.KeyDto;
 import pl.bartus.benzo.enzo.cryptoseckey.key.Key;
 import pl.bartus.benzo.enzo.cryptoseckey.key.KeyServiceApi;
 import pl.bartus.benzo.enzo.cryptoseckey.model.verify.VerifyRequest;
